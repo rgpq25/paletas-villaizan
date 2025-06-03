@@ -39,7 +39,7 @@ npm run dev
 
 This StackOverflow post shows the correct way to establish an internal package that will be used by an app that doesnt automatically transpile its dependencies, like NestJS. Following said configuration, the package can be used both by Nextjs and NestJS, allowing the automatic generation and usage of types across the turborepo.
 
-- [text](https://stackoverflow.com/a/75356810)
+- https://stackoverflow.com/a/75356810
 
 ## Useful Links
 
