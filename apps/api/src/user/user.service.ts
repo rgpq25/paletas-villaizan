@@ -13,7 +13,7 @@ export class UserService {
         const id = uuidv4();
         const hashedPassword = await hash(password, 10);
 
-        const newUser = await this.prismaService.user.create({
+        return await this.prismaService.user.create({
             data: {
                 ...user,
                 id,
@@ -22,8 +22,6 @@ export class UserService {
                 updatedById: id,
             },
         });
-
-        return newUser;
     }
 
     async findByEmail(email: string) {
