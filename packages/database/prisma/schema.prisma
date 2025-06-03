@@ -9,25 +9,25 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  name  String
-  lastname String
-  email String  @unique
-  password String
-  secretKey String?
+  id            String    @id @default(cuid())
+  name          String
+  lastname      String
+  email         String    @unique
+  password      String
+  secretKey     String?
   
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  deletedAt DateTime? 
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deletedAt     DateTime? 
 
-  createdBy User? @relation("CreatedBy", fields: [createdById], references: [id])
-  updatedBy User? @relation("UpdatedBy", fields: [updatedById], references: [id])
-  deletedBy User? @relation("DeletedBy", fields: [deletedById], references: [id])
-  createdById Int?
-  updatedById Int?
-  deletedById Int?
+  createdBy     User?     @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedBy     User?     @relation("UpdatedBy", fields: [updatedById], references: [id])
+  deletedBy     User?     @relation("DeletedBy", fields: [deletedById], references: [id])
+  createdById   String?
+  updatedById   String?
+  deletedById   String?
 
-  createdUsers User[] @relation("CreatedBy")
-  updatedUsers User[] @relation("UpdatedBy")
-  deletedUsers User[] @relation("DeletedBy")
+  createdUsers  User[]    @relation("CreatedBy")
+  updatedUsers  User[]    @relation("UpdatedBy")
+  deletedUsers  User[]    @relation("DeletedBy")
 }
