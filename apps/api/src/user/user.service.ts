@@ -33,6 +33,12 @@ export class UserService {
     async findById(id: string) {
         return await this.prismaService.user.findUnique({
             where: { id },
+            select: {
+                id: true,
+                name: true,
+                lastname: true,
+                email: true,
+            },
         });
     }
 
