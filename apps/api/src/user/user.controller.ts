@@ -2,6 +2,7 @@ import {
     Controller,
     ForbiddenException,
     Get,
+    NotFoundException,
     Param,
     Request,
     UseGuards,
@@ -25,6 +26,9 @@ export class UserController {
         if (req.user.sub !== id) {
             throw new ForbiddenException();
         }
-        return await this.userService.findById(id);
+        const user = await this.userService.findById(id);
+        if (!user) throw new NotFoundException();
+
+        return user;
     }
 }
