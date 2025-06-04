@@ -3,13 +3,12 @@ import {
     Injectable,
     UnauthorizedException,
 } from '@nestjs/common';
-import { CreateUserDto } from 'src/user/dto/create-user.dto';
-import { UserService } from 'src/user/user.service';
-import { LoginDto } from './dto/login.dto';
-import { compare } from 'bcryptjs';
-import { JwtPayload } from '@repo/db';
-import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
+import { JwtPayload } from '@repo/db';
+import { AppConfig, LoginUserInput, RegisterUserInput } from '@repo/schemas';
+import { compare } from 'bcryptjs';
+import { UserService } from 'src/user/user.service';
 
 const JWT_EXPIRE_TIME = '1m';
 
@@ -18,23 +17,25 @@ export class AuthService {
     constructor(
         private userService: UserService,
         private jwtService: JwtService,
-        private configService: ConfigService,
+        private configService: ConfigService<AppConfig>,
     ) {}
 
-    async registerUser(createUserDto: CreateUserDto) {
-        const user = await this.userService.findByEmail(createUserDto.email);
+    async registerUser(registerUserInput: RegisterUserInput) {
+        const user = await this.userService.findByEmail(
+            registerUserInput.email,
+        );
         if (user) {
             throw new ConflictException('User with this email already exists.');
         }
 
-        const newUser = await this.userService.create(createUserDto);
+        const newUser = await this.userService.create(registerUserInput);
         return {
             id: newUser.id,
         };
     }
 
-    async login(loginDto: LoginDto) {
-        const user = await this.validateUser(loginDto);
+    async login(loginInput: LoginUserInput) {
+        const user = await this.validateUser(loginInput);
         const payload: JwtPayload = {
             sub: user.id,
         };
@@ -79,9 +80,9 @@ export class AuthService {
         };
     }
 
-    async validateUser(dto: LoginDto) {
-        const user = await this.userService.findByEmail(dto.email);
-        if (user && (await compare(dto.password, user?.password))) {
+    async validateUser(loginInput: LoginUserInput) {
+        const user = await this.userService.findByEmail(loginInput.email);
+        if (user && (await compare(loginInput.password, user?.password))) {
             return user;
         }
         throw new UnauthorizedException();

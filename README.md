@@ -41,6 +41,12 @@ This **StackOverflow** post shows the correct way to establish an internal packa
 
 - https://stackoverflow.com/a/75356810
 
+### 2.2. Integrating Zod with NestJS
+
+Zod is a nice schema validation library, this video shows how to use it to validate the body or different params of certain endpoints, making them more secure by enforcing certain rules for all the attributes.
+
+- https://www.youtube.com/watch?v=iR2Nm99CV20&ab_channel=EmadMamaghani
+
 ## 3. Useful Links
 
 Learn more about the power of Turborepo:

@@ -9,13 +9,14 @@ import { Request } from 'express';
 import { JwtPayload } from '@repo/db';
 import { UserService } from 'src/user/user.service';
 import { ConfigService } from '@nestjs/config';
+import { AppConfig } from '@repo/schemas';
 
 @Injectable()
 export class JwtGuard implements CanActivate {
     constructor(
         private jwtService: JwtService,
         private userService: UserService,
-        private configService: ConfigService,
+        private configService: ConfigService<AppConfig>,
     ) {}
 
     async canActivate(context: ExecutionContext): Promise<boolean> {

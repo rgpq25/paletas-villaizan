@@ -1,16 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { hash } from 'bcryptjs';
 import { v4 as uuidv4 } from 'uuid';
-import { User } from '@repo/db';
+import { RegisterUserInput } from '@repo/schemas';
 
 @Injectable()
 export class UserService {
     constructor(private readonly prismaService: PrismaService) {}
 
-    async create(createUserDto: CreateUserDto) {
-        const { password, ...user } = createUserDto;
+    async create(registerUserInput: RegisterUserInput) {
+        const { password, ...user } = registerUserInput;
         const id = uuidv4();
         const hashedPassword = await hash(password, 10);
 
@@ -61,11 +60,5 @@ export class UserService {
         });
 
         return updatedUser.secretKey;
-    }
-
-    getPublicUserData(user: User) {
-        return {
-            id: user.id,
-        };
     }
 }

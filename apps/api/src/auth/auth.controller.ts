@@ -6,24 +6,34 @@ import {
     Request,
     UseGuards,
 } from '@nestjs/common';
-import { CreateUserDto } from 'src/user/dto/create-user.dto';
-import { AuthService } from './auth.service';
-import { LoginDto } from './dto/login.dto';
 import { JwtPayload } from '@repo/db';
-import { RefreshJwtGuard } from './guards/refresh.guard';
+import {
+    LoginUserInput,
+    loginUserSchema,
+    RegisterUserInput,
+    registerUserSchema,
+} from '@repo/schemas';
+import { ZodValidatorPipe } from 'src/common/pipes/zod-validator.pipe';
+import { AuthService } from './auth.service';
+import { RefreshJwtGuard } from 'src/common/guards/refresh.guard';
 
 @Controller('auth')
 export class AuthController {
     constructor(private readonly authService: AuthService) {}
 
     @Post('register')
-    async register(@Body() createUserDto: CreateUserDto) {
-        return await this.authService.registerUser(createUserDto);
+    async register(
+        @Body(new ZodValidatorPipe(registerUserSchema))
+        body: RegisterUserInput,
+    ) {
+        return await this.authService.registerUser(body);
     }
 
     @Post('login')
-    async login(@Body() loginDto: LoginDto) {
-        return await this.authService.login(loginDto);
+    async login(
+        @Body(new ZodValidatorPipe(loginUserSchema)) body: LoginUserInput,
+    ) {
+        return await this.authService.login(body);
     }
 
     @UseGuards(RefreshJwtGuard)
