@@ -1,0 +1,12 @@
+{
+	"extends": "@repo/typescript-config/base.json",
+	"compilerOptions": {
+		"lib": ["ES2019"],
+		"module": "commonjs",
+        "moduleResolution": "node",
+		"outDir": "./dist",
+		"rootDir": "./src"
+	},
+	"include": ["*.d.ts", "**/*.ts", "**/*.tsx"],
+	"exclude": ["dist", "build", "node_modules"]
+}
