@@ -10,7 +10,7 @@ import { AppConfig, LoginUserInput, RegisterUserInput } from '@repo/schemas';
 import { compare } from 'bcryptjs';
 import { UserService } from 'src/user/user.service';
 
-const JWT_EXPIRE_TIME = '1m';
+const JWT_EXPIRE_TIME = '15m';
 
 @Injectable()
 export class AuthService {
