@@ -18,9 +18,8 @@ const ThemeImage = (props: Props) => {
 
 export default function Home() {
     return (
-        <div className={'text-red-500 flex h-dvh w-dvw'}>
-            {/* <Button>hola</Button> */}
-            <p className='m-auto text-xl font-bold'>hola!</p>
+        <div className={'flex h-dvh w-dvw'}>
+            <p className="m-auto text-xl font-bold text-red-500">hola!</p>
         </div>
     );
 }
